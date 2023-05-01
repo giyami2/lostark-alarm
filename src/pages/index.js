@@ -8,13 +8,16 @@ export default function Home() {
     npc: "",
     item: "",
   });
+
   const onSubmit = () => {
     console.log("submit!", marchant);
-    axios.post("http://localhost:3000/api/alarm", {
-      location: marchant.location,
-      npc: marchant.npc,
-      item: marchant.item,
-    }).then(res => console.log(res));
+    axios
+      .post("http://localhost:3000/api/alarm", {
+        location: marchant.location,
+        npc: marchant.npc,
+        item: marchant.item,
+      })
+      .then((res) => console.log(res));
   };
 
   return (
