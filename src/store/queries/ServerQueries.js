@@ -22,8 +22,8 @@ export const serversApi = createApi({
         method: "GET",
       }),
       transformResponse: (response) => {
-        console.log(response);
-        const _response = response?.map((res) => res.serverName);
+        let _response = ["All"];
+        response?.map((res) => _response.push(res.serverName));
         return _response;
       },
       providesTags: ["servers"],

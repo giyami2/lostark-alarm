@@ -1,4 +1,4 @@
-import { theme } from "@/styles/theme";
+import theme from "@/styles/theme";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
@@ -31,7 +31,7 @@ export const typeface = {
     font-style: normal;
     font-weight: 700;
     font-size: 12px;
-    line-height: 130%;
+    line-height: 150%;
   `,
   B6: css`
     font-style: normal;
@@ -61,13 +61,13 @@ export const typeface = {
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
-    line-height: 130%;
+    line-height: 150%;
   `,
   M5: css`
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
-    line-height: 130%;
+    line-height: 150%;
   `,
   S1: css`
     font-style: normal;
@@ -117,7 +117,7 @@ export const typeface = {
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
-    line-height: 130%;
+    line-height: 150%;
     text-decoration-line: underline;
   `,
 };
@@ -130,10 +130,15 @@ export default function Typography({ typeface, color, children, ...rest }) {
   );
 }
 
+Typography.defaultProps = {
+  typeface: "M4",
+  color: theme.colors.text.black,
+};
+
 const StyleTypo = styled.p`
   ${(props) =>
     props.typeface ? typeface[props.typeface] : typeface[props["M1"]]};
   margin: 0;
-  color: ${props => props.theme.colors.black2};
+  color: ${(props) => props.color};
   white-space: pre-line;
 `;
