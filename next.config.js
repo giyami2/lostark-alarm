@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  basePath: "/LoAlarm",
+  reactStrictMode: true
 }
 
 module.exports = nextConfig
