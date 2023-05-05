@@ -99,3 +99,11 @@ export const CardWrapper = styled.div`
   padding: 0px;
   gap: 10px;
 `;
+
+export const AddBtn = styled.button`
+  background: transparent;
+  border: none;
+  position: fixed;
+  bottom: 20px;
+  right: 40px;
+`;

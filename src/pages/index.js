@@ -3,6 +3,7 @@ import Typography from "@/components/common/Typography";
 import Selectbox from "@/components/common/input/Selectbox";
 import { useGetServersQuery } from "@/store/queries/ServerQueries";
 import {
+  AddBtn,
   AlarmContainer,
   CardWrapper,
   ChipWrapper,
@@ -38,6 +39,14 @@ export default function Home() {
   if (!isLoading)
     return (
       <Layout>
+        <AddBtn>
+          <Image
+            src={"/assets/icons/add-btn.svg"}
+            alt={"add-btn"}
+            width={50}
+            height={50}
+          />
+        </AddBtn>
         <Container>
           <FilterContainer>
             <Selectbox options={servers} value={server} onChange={setServer} />
@@ -53,6 +62,48 @@ export default function Home() {
             </SettingsContainer>
           </FilterContainer>
           <AlarmContainer>
+            <Alarm
+              server={server}
+              location={"Anikka / Twilight Mists"}
+              cardGrade={"leg"}
+              cardNm={"Wei"}
+              rapportGrade={"leg"}
+            />
+            <Alarm
+              server={server}
+              location={"Tortoyk / Forest of Giants"}
+              cardGrade={"unc"}
+              cardNm={"Mokamoka"}
+              rapportGrade={"epic"}
+            />
+            <Alarm
+              server={server}
+              location={"Anikka / Twilight Mists"}
+              cardGrade={"leg"}
+              cardNm={"Wei"}
+              rapportGrade={"leg"}
+            />
+            <Alarm
+              server={server}
+              location={"Tortoyk / Forest of Giants"}
+              cardGrade={"unc"}
+              cardNm={"Mokamoka"}
+              rapportGrade={"epic"}
+            />
+            <Alarm
+              server={server}
+              location={"Anikka / Twilight Mists"}
+              cardGrade={"leg"}
+              cardNm={"Wei"}
+              rapportGrade={"leg"}
+            />
+            <Alarm
+              server={server}
+              location={"Tortoyk / Forest of Giants"}
+              cardGrade={"unc"}
+              cardNm={"Mokamoka"}
+              rapportGrade={"epic"}
+            />
             <Alarm
               server={server}
               location={"Anikka / Twilight Mists"}
@@ -173,7 +224,7 @@ const Rapport = ({ grade }) => {
         width={45}
         height={45}
       />
-      <Typography typeface={"M4"}>
+      <Typography typeface={"M3"}>
         {grade === "leg" ? "Legendary Rapport" : "Epic Rapport"}
       </Typography>
     </CardWrapper>
