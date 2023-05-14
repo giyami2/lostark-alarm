@@ -3,41 +3,60 @@ import Typography from "../Typography";
 import Image from "next/image";
 import { useState } from "react";
 import ClickOutside from "@/utils/clickOutside";
+import theme from "@/styles/theme";
 
-export default function Selectbox({ options, value, onChange }) {
+export default function Selectbox({
+  className,
+  options,
+  label,
+  defaultOption,
+  value,
+  onChange,
+}) {
   const [expanded, setExpanded] = useState(false);
 
   return (
     <ClickOutside active={expanded} onClick={() => setExpanded(false)}>
-      <SelectboxContainer>
-        <SelectLabel onClick={() => setExpanded(!expanded)}>
-          <Typography typeface={"M4"}>{value}</Typography>
-          <Image
-            src={"/assets/icons/arrow-down.svg"}
-            alt={"arrow-down"}
-            width={20}
-            height={20}
-          />
-        </SelectLabel>
-        <SelectOptionContainer visible={expanded}>
-          <SelectOptions>
-            {options?.map((option, idx) => (
-              <SelectOption
-                key={idx}
-                onClick={() => {
-                  onChange(option);
-                  setExpanded(false);
-                }}
-              >
-                {option}
-              </SelectOption>
-            ))}
-          </SelectOptions>
-        </SelectOptionContainer>
-      </SelectboxContainer>
+      <SelectboxLayout>
+        <Typography typeface={"M3"} color={theme.colors.gray3}>{label}</Typography>
+        <SelectboxContainer className={className}>
+          <SelectLabel onClick={() => setExpanded(!expanded)}>
+            <Typography typeface={"M4"}>
+              {_.isEmpty(defaultOption) || value !== "" ? value : defaultOption}
+            </Typography>
+            <Image
+              src={"/assets/icons/arrow-down.svg"}
+              alt={"arrow-down"}
+              width={18}
+              height={18}
+            />
+          </SelectLabel>
+          <SelectOptionContainer size={options.length} visible={expanded}>
+            <SelectOptions>
+              {options?.map((option, idx) => (
+                <SelectOption
+                  key={idx}
+                  onClick={() => {
+                    onChange(option);
+                    setExpanded(false);
+                  }}
+                >
+                  {option}
+                </SelectOption>
+              ))}
+            </SelectOptions>
+          </SelectOptionContainer>
+        </SelectboxContainer>
+      </SelectboxLayout>
     </ClickOutside>
   );
 }
+
+export const SelectboxLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+`;
 
 export const SelectboxContainer = styled.div`
   display: flex;
@@ -48,10 +67,11 @@ export const SelectboxContainer = styled.div`
   position: relative;
 
   background: #ffffff;
-  border: 4px solid #59d4cc;
+  border: 3px solid #59d4cc;
   border-radius: 10px;
 
   width: auto;
+  min-width: 150px;
   height: 20px;
 `;
 
@@ -68,10 +88,13 @@ const SelectLabel = styled.div`
 `;
 
 const SelectOptionContainer = styled.div`
-  visibility: ${({ visible }) => (visible ? "visible" : "hidden")};
+  visibility: ${({ size, visible }) =>
+    visible && size > 0 ? "visible" : "hidden"};
   position: absolute;
   width: auto;
-  height: 120px;
+  min-width: 150px;
+  height: max-content;
+  max-height: 120px;
   left: 0;
   top: calc(100% + 11px);
   border: 1px solid #59d4cc;
@@ -79,6 +102,7 @@ const SelectOptionContainer = styled.div`
   border-bottom-right-radius: 5px;
   background-color: #fff;
   overflow-y: scroll;
+  z-index: 22;
 
   &::-webkit-scrollbar {
     width: 12px;

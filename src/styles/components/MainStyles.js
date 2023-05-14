@@ -5,6 +5,7 @@ export const MainLayout = styled.main`
   height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow: scroll;
 `;
 
 export const Container = styled.div`
@@ -106,4 +107,5 @@ export const AddBtn = styled.button`
   position: fixed;
   bottom: 20px;
   right: 40px;
+  z-index: 999;
 `;

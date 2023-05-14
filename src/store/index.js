@@ -3,13 +3,15 @@ import { createWrapper } from "next-redux-wrapper";
 import { useDispatch, useSelector } from "react-redux";
 import reducer from "./slices";
 import { serversApi } from "@/store/queries/ServerQueries";
+import { continentsApi } from "./queries/ContinentsQueries";
+import { locationsApi } from "./queries/LocationQueries";
 
 export const store = configureStore({
   reducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(serversApi.middleware),
+    }).concat(serversApi.middleware, continentsApi.middleware, locationsApi.middleware),
   devTools: process.env.NODE_ENV !== "production",
 });
 

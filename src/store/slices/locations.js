@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { serversApi } from "../queries/ServerQueries";
+import { locationsApi } from "../queries/LocationQueries";
 
 // api 실행 후 Redux 상태관리 저장
-const SLICE_NAME = "servers";
+const SLICE_NAME = "locations";
 const initialState = {
   list: [],
 };
@@ -13,9 +13,9 @@ const slice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addMatcher(
-      serversApi.endpoints.getServers.matchFulfilled,
+      locationsApi.endpoints.getLocations.matchFulfilled,
       (state, { payload }) => {
-        state.list = payload?.map((p) => p.serverName);
+        state.list = payload?.map((p) => p.location);
       }
     );
   },

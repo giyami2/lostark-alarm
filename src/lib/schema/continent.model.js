@@ -1,4 +1,4 @@
-// Continent schema
+// Continents schema
 import mongoose, { Schema, models } from "mongoose";
 
 export const ContinentSchema = new Schema({

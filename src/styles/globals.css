@@ -17,4 +17,9 @@ body {
   color: rgb(var(--foreground-rgb));
   background: #fff;
   margin: 0;
+  overflow: hidden;
+}
+
+#root-modal {
+  z-index: 111;
 }

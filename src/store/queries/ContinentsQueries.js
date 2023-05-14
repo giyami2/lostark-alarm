@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const REDUCER_PATH = "serversApi";
+const REDUCER_PATH = "continentsApi";
 
-export const serversApi = createApi({
+export const continentsApi = createApi({
   reducerPath: REDUCER_PATH,
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.NEXT_PUBLIC_API_HOST}`,
@@ -13,20 +13,20 @@ export const serversApi = createApi({
     // 	return headers;
     // },
   }),
-  tagTypes: ["servers"],
+  tagTypes: ["continents"],
   endpoints: (builder) => ({
-    // 서버 조회
-    getServers: builder.query({
-      query: (isAll) => ({
-        url: `/get-servers?all=${isAll}`,
+    // 대륙 조회
+    getContinents: builder.query({
+      query: () => ({
+        url: `/get-continents`,
         method: "GET",
       }),
       transformResponse: (response) => {        
         return response;
       },
-      providesTags: ["servers"],
+      providesTags: ["continents"],
     }),
   }),
 });
 
-export const { useGetServersQuery } = serversApi;
+export const { useGetContinentsQuery } = continentsApi;
