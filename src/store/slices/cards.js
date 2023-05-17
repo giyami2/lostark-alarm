@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { continentsApi } from "../queries/ContinentsQueries";
+import { cardsApi } from "@/store/queries/CardQueries";
 
 // 현재는 사용X 
-const SLICE_NAME = "continents";
+const SLICE_NAME = "cards";
 const initialState = {
   list: [],
 };
@@ -13,7 +13,7 @@ const slice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addMatcher(
-      continentsApi.endpoints.getContinents.matchFulfilled,
+      cardsApi.endpoints.getCards.matchFulfilled,
       (state, { payload }) => {
         state.list = payload;
       }

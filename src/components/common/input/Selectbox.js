@@ -18,7 +18,9 @@ export default function Selectbox({
   return (
     <ClickOutside active={expanded} onClick={() => setExpanded(false)}>
       <SelectboxLayout>
-        <Typography typeface={"M3"} color={theme.colors.gray3}>{label}</Typography>
+        <Typography typeface={"M3"} color={theme.colors.gray3}>
+          {label}
+        </Typography>
         <SelectboxContainer className={className}>
           <SelectLabel onClick={() => setExpanded(!expanded)}>
             <Typography typeface={"M4"}>
@@ -71,7 +73,7 @@ export const SelectboxContainer = styled.div`
   border-radius: 10px;
 
   width: auto;
-  min-width: 150px;
+  min-width: 180px;
   height: 20px;
 `;
 

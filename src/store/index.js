@@ -5,13 +5,21 @@ import reducer from "./slices";
 import { serversApi } from "@/store/queries/ServerQueries";
 import { continentsApi } from "./queries/ContinentsQueries";
 import { locationsApi } from "./queries/LocationQueries";
+import { cardsApi } from "./queries/CardQueries";
+import { alarmsApi } from "./queries/AlarmQueries";
 
 export const store = configureStore({
   reducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(serversApi.middleware, continentsApi.middleware, locationsApi.middleware),
+    }).concat(
+      serversApi.middleware,
+      continentsApi.middleware,
+      locationsApi.middleware,
+      cardsApi.middleware,
+      alarmsApi.middleware
+    ),
   devTools: process.env.NODE_ENV !== "production",
 });
 

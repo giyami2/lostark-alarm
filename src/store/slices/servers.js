@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { serversApi } from "../queries/ServerQueries";
 
 // api 실행 후 Redux 상태관리 저장
+// 현재는 사용X 
 const SLICE_NAME = "servers";
 const initialState = {
   list: [],
@@ -15,7 +16,7 @@ const slice = createSlice({
     builder.addMatcher(
       serversApi.endpoints.getServers.matchFulfilled,
       (state, { payload }) => {
-        state.list = payload?.map((p) => p.serverName);
+        state.list = payload;
       }
     );
   },

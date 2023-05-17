@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { locationsApi } from "../queries/LocationQueries";
 
-// api 실행 후 Redux 상태관리 저장
+// 현재는 사용X 
 const SLICE_NAME = "locations";
 const initialState = {
   list: [],
@@ -15,7 +15,7 @@ const slice = createSlice({
     builder.addMatcher(
       locationsApi.endpoints.getLocations.matchFulfilled,
       (state, { payload }) => {
-        state.list = payload?.map((p) => p.location);
+        state.list = payload;
       }
     );
   },

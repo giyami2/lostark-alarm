@@ -52,7 +52,7 @@ const PortalContent = styled.div`
   flex-direction: column;
   z-index: 10;
   width: 520px;
-  height: 540px;
+  height: max-content;
   border: 4px solid ${(props) => props.theme.colors.secondary};
   border-radius: 10px;
   background: white;

@@ -1,6 +1,10 @@
 import Layout from "@/components/common/Layout";
+import Modal from "@/components/common/Modal";
+import ModalPortal from "@/components/common/Portal";
 import Typography from "@/components/common/Typography";
 import Selectbox from "@/components/common/input/Selectbox";
+import { useAppSelector } from "@/store";
+import { useGetAlarmsQuery } from "@/store/queries/AlarmQueries";
 import { useGetServersQuery } from "@/store/queries/ServerQueries";
 import {
   AddBtn,
@@ -15,20 +19,31 @@ import {
 } from "@/styles/components/MainStyles";
 import theme from "@/styles/theme";
 import axios from "axios";
+import _ from "lodash";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 
 export default function Home() {
-  const { data: servers, isFetching, isLoading } = useGetServersQuery();
-  const [server, setServer] = useState("All");
+  const { data: servers, refetch } = useGetServersQuery(1);
+  const { data: alarms, refetch: getAlarms } = useGetAlarmsQuery();
+  const [server, setServer] = useState('All');
+  const [add, setAdd] = useState(false);
+
   useEffect(() => {
-    console.log(server);
-  }, [server]);
+    if (!add) {
+      refetch();
+    }
+  }, [add]);
+
+  useEffect(() => {
+    getAlarms();
+  }, [server])
 
   const onSubmit = () => {
     console.log("submit!", marchant);
     // axios
-    //   .post("http://localhost:3000/api/alarm", {
+    //   .post("http://localhost:3000/api/alarm", {~
     //     location: marchant.location,
     //     npc: marchant.npc,
     //     item: marchant.item,
@@ -36,20 +51,26 @@ export default function Home() {
     //   .then((res) => console.log(res));
   };
 
-  if (!isLoading)
+  if (!_.isUndefined(servers))
     return (
       <Layout>
-        <AddBtn>
-          <Image
-            src={"/assets/icons/add-btn.svg"}
-            alt={"add-btn"}
-            width={50}
-            height={50}
-          />
-        </AddBtn>
+        {!add && (
+          <AddBtn onClick={() => setAdd(true)}>
+            <Image
+              src={"/assets/icons/add-btn.svg"}
+              alt={"add-btn"}
+              width={50}
+              height={50}
+            />
+          </AddBtn>
+        )}
         <Container>
           <FilterContainer>
-            <Selectbox options={servers} value={server} onChange={setServer} />
+            <Selectbox
+              options={servers?.map(items => items.serverName)}
+              value={server}
+              onChange={setServer}
+            />
             {/* keyword & alarm */}
             <SettingsContainer onClick={() => console.log("Setting!")}>
               <Image
@@ -62,69 +83,43 @@ export default function Home() {
             </SettingsContainer>
           </FilterContainer>
           <AlarmContainer>
-            <Alarm
-              server={server}
-              location={"Anikka / Twilight Mists"}
-              cardGrade={"leg"}
-              cardNm={"Wei"}
-              rapportGrade={"leg"}
-            />
-            <Alarm
-              server={server}
-              location={"Tortoyk / Forest of Giants"}
-              cardGrade={"unc"}
-              cardNm={"Mokamoka"}
-              rapportGrade={"epic"}
-            />
-            <Alarm
-              server={server}
-              location={"Anikka / Twilight Mists"}
-              cardGrade={"leg"}
-              cardNm={"Wei"}
-              rapportGrade={"leg"}
-            />
-            <Alarm
-              server={server}
-              location={"Tortoyk / Forest of Giants"}
-              cardGrade={"unc"}
-              cardNm={"Mokamoka"}
-              rapportGrade={"epic"}
-            />
-            <Alarm
-              server={server}
-              location={"Anikka / Twilight Mists"}
-              cardGrade={"leg"}
-              cardNm={"Wei"}
-              rapportGrade={"leg"}
-            />
-            <Alarm
-              server={server}
-              location={"Tortoyk / Forest of Giants"}
-              cardGrade={"unc"}
-              cardNm={"Mokamoka"}
-              rapportGrade={"epic"}
-            />
-            <Alarm
-              server={server}
-              location={"Anikka / Twilight Mists"}
-              cardGrade={"leg"}
-              cardNm={"Wei"}
-              rapportGrade={"leg"}
-            />
-            <Alarm
-              server={server}
-              location={"Tortoyk / Forest of Giants"}
-              cardGrade={"unc"}
-              cardNm={"Mokamoka"}
-              rapportGrade={"epic"}
-            />
+            {
+              server !== "All" ?
+                alarms?.filter(alarm => alarm.serverName === server).map(alarm => {
+                  return <Alarm
+                    server={alarm.serverName}
+                    location={`${alarm.continentName} / ${alarm.locationName}`}
+                    cardGrade={alarm.grade}
+                    cardNm={alarm.cardName}
+                    rapportGrade={alarm.rapport}
+                    user={alarm.user}
+                    datetime={alarm.datetime}
+                  />
+                }) :
+                alarms?.map(alarm => {
+                  return <Alarm
+                    server={alarm.serverName}
+                    location={`${alarm.continentName} / ${alarm.locationName}`}
+                    cardGrade={alarm.grade}
+                    cardNm={alarm.cardName}
+                    rapportGrade={alarm.rapport}
+                    user={alarm.user}
+                    datetime={alarm.datetime}
+                  />
+                })
+            }
+
           </AlarmContainer>
         </Container>
+        <ModalPortal openPortal={add} closePortal={() => setAdd(false)}>
+          <Modal closeModal={() => setAdd(false)} />
+        </ModalPortal>
+        <div id="root-modal"></div>
       </Layout>
     );
 }
 
-const Alarm = ({ server, location, cardGrade, cardNm, rapportGrade }) => {
+const Alarm = ({ server, location, cardGrade, cardNm, rapportGrade, user, datetime }) => {
   return (
     <Items>
       <div className="alarm-info">
@@ -151,7 +146,10 @@ const Alarm = ({ server, location, cardGrade, cardNm, rapportGrade }) => {
       </div>
       <div className="user-info">
         <Typography typeface={"S2"} color={theme.colors.text.gray}>
-          User name
+          {user}
+        </Typography>
+        <Typography typeface={"S2"} color={theme.colors.text.gray}>
+          {datetime}
         </Typography>
       </div>
     </Items>
@@ -178,13 +176,13 @@ const Location = ({ locationNm }) => {
 const Card = ({ grade, cardNm }) => {
   const convertIcon = (grade) => {
     switch (grade) {
-      case "leg":
+      case "L":
         return "leg-card.svg";
-      case "epic":
+      case "E":
         return "epic-card.svg";
-      case "rare":
+      case "R":
         return "rare-card.svg";
-      case "unc":
+      case "U":
         return "unc-card.svg";
       default:
         return null;
@@ -207,9 +205,9 @@ const Card = ({ grade, cardNm }) => {
 const Rapport = ({ grade }) => {
   const convertIcon = (grade) => {
     switch (grade) {
-      case "leg":
+      case "Legendary":
         return "leg-rapportbox.svg";
-      case "epic":
+      case "Epic":
         return "epic-rapportbox.svg";
       default:
         return null;

@@ -1,12 +1,11 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
 import navbar from './navbar';
-import servers from './servers';
-import continents from './continents';
-import locations from './locations';
 import { serversApi } from '@/store/queries/ServerQueries';
-import { continentsApi } from '../queries/ContinentsQueries';
-import { locationsApi } from '../queries/LocationQueries';
+import { continentsApi } from '@/store/queries/ContinentsQueries';
+import { locationsApi } from '@/store/queries/LocationQueries';
+import { cardsApi } from '@/store/queries/CardQueries';
+import { alarmsApi } from '@/store/queries/AlarmQueries';
 
 const rootReducer = (state, action) => {
 	if (action.type === HYDRATE) {
@@ -17,12 +16,11 @@ const rootReducer = (state, action) => {
 	}
 	return combineReducers({
 		navbar,
-		servers,
-		continents,
-		locations,
 		[serversApi.reducerPath]: serversApi.reducer,
 		[continentsApi.reducerPath]: continentsApi.reducer,
 		[locationsApi.reducerPath]: locationsApi.reducer,
+		[cardsApi.reducerPath]: cardsApi.reducer,
+		[alarmsApi.reducerPath]: alarmsApi.reducer
 	})(state, action);
 };
 

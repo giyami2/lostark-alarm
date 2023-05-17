@@ -19,6 +19,12 @@ const theme = {
     gray3: "#878787",
     black: "#000",
     black2: "#2c2c2c",
+    grade: {
+      uncommon: "#56b131",
+      rare: "#2072aa",
+      epic: "#69388f",
+      legendary: "#b4811f",
+    },
   },
   fontFamily: {
     sans: ["Graphik", "sans-serif"],

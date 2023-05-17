@@ -21,7 +21,7 @@ export const Navbar = () => {
           router.push("/");
         }}
       >
-        <Typography typeface={"M1"}>Marchant</Typography>
+        <Typography typeface={"M1"}>Wandering Merchant</Typography>
       </NavbarItem>
       <NavbarItem
         tabIdx="1"

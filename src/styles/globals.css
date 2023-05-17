@@ -20,6 +20,10 @@ body {
   overflow: hidden;
 }
 
+button {
+  font-family: 'Fredoka', sans-serif;
+}
+
 #root-modal {
   z-index: 111;
 }
