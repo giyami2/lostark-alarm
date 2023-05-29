@@ -1,17 +1,7 @@
 // TIME_130 schema
-import mongoose, { Schema, models } from "mongoose";
+import mongoose from "mongoose";
+import { TimeSchema } from "./model";
 
-export const Time530Schema = new Schema({
-  continentId: {
-    type: Number,
-    required: true,
-  },
-  continentName: {
-    type: String,
-    required: true,
-  },
-});
-
-const Time530 = models?.Time530 || mongoose.model("time_530", Time530Schema, 'time_530');
+const Time530 = mongoose.models['time_530'] || mongoose.model("time_530", TimeSchema, 'time_530');
 
 export default Time530;

@@ -5,37 +5,37 @@ import styled from "@emotion/styled";
 export const typeface = {
   B1: css`
     font-style: normal;
-    font-weight: 700;
+    font-weight: 500;
     font-size: 28px;
     line-height: 150%;
   `,
   B2: css`
     font-style: normal;
-    font-weight: 700;
+    font-weight: 500;
     font-size: 18px;
     line-height: 150%;
   `,
   B3: css`
     font-style: normal;
-    font-weight: 700;
+    font-weight: 500;
     font-size: 16px;
     line-height: 150%;
   `,
   B4: css`
     font-style: normal;
-    font-weight: 700;
+    font-weight: 500;
     font-size: 14px;
     line-height: 150%;
   `,
   B5: css`
     font-style: normal;
-    font-weight: 700;
+    font-weight: 500;
     font-size: 12px;
     line-height: 150%;
   `,
   B6: css`
     font-style: normal;
-    font-weight: 700;
+    font-weight: 500;
     font-size: 10px;
     line-height: 110%;
   `,
